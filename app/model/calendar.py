@@ -18,14 +18,16 @@ class Reminder:
         return f"Reminder on {self.date_time} of type {self.type}"
 
 
+@dataclass
+class Event:
+    title: str
+    description: str
+    date_: date
+    start_at: time
+    end_at: time
+    reminders: list[Reminder] = field(default_factory=list)
+    id: str = generate_unique_id()
 
 
 
 
-# TODO: Implement Event class here
-
-
-# TODO: Implement Day class here
-
-
-# TODO: Implement Calendar class here
