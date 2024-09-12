@@ -6,6 +6,7 @@ from app.services.util import generate_unique_id, date_lower_than_today_error, e
     reminder_not_found_error, slot_not_available_error
 
 
+# TODO: Implement Reminder class here
 @dataclass
 class Reminder:
     EMAIL: ClassVar[str] = 'email'
@@ -28,6 +29,12 @@ class Event:
     reminders: list[Reminder] = field(default_factory=list)
     id: str = generate_unique_id()
 
+    def add_reminder(self):
+        self.reminders.append(Reminder(Reminder.date_time, Reminder.type))
 
+    def delete_reminder(self, reminder_index: int):
+        pass
 
-
+    def __str__(self):
+        return (f"ID: {self.id}\nEvent title: {self.title}\nDescription: {self.description}\nTime: {self.start_at} -"
+                f" {self.end_at}")
