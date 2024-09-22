@@ -6,7 +6,6 @@ from app.services.util import generate_unique_id, date_lower_than_today_error, e
     reminder_not_found_error, slot_not_available_error
 
 
-# TODO: Implement Reminder class here
 @dataclass
 class Reminder:
     EMAIL: ClassVar[str] = 'email'
