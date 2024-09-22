@@ -28,13 +28,14 @@ class Event:
     reminders: list[Reminder] = field(init=False, default_factory=list)
     id: str = generate_unique_id()
 
-    def add_reminder(self):
-        self.reminders.append(Reminder(Reminder.date_time, Reminder.type))
+    def add_reminder(self, date_time: datetime, reminder_type: str):
+        self.reminders.append(Reminder(date_time, reminder_type))
 
     def delete_reminder(self, reminder_index: int):
-        if reminder_index <= len(self.reminders):
+        if reminder_index <= (len(self.reminders) - 1):
             self.reminders.pop(reminder_index)
-        reminder_not_found_error()
+        else:
+            reminder_not_found_error()
 
     def __str__(self):
         return (f"ID: {self.id}\nEvent title: {self.title}\nDescription: {self.description}\nTime: {self.start_at} -"
