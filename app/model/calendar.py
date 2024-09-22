@@ -81,3 +81,37 @@ class Day:
                     slot_not_available_error()
                 else:
                     self.slots[slot] = event_id
+
+class Calendar:
+
+    def __init__(self):
+        self.days: dict[date, Day] = {}
+        self.events: dict[str, Event] = {}
+
+    def add_event(self, title: str, description: str, date_: date, start_at: time, end_at: time) -> str:
+
+        if date_ < datetime.now().date():
+            date_lower_than_today_error()
+
+        elif not self.days.get(date_):
+            self.days[date_] = Day(date_)
+        event: Event = Event(title, description, date_, start_at, end_at)
+        self.days[date_].add_event(event.id, start_at, end_at)
+        self.events[event.id] = event
+        return event.id
+
+    def add_reminder(self, event_id: str, date_time: datetime, type_: str):
+        if event_id not in self.events:
+            event_not_found_error()
+        else:
+            self.events[event_id].add_reminder(date_time, type_)
+
+    def find_available_slots(self, date_: date) -> list[time]:
+        spaces: list[time] = []
+        for time_ in self.days[date_].slots:
+            if not time_:
+                spaces.append(time_)
+        return spaces
+
+
+
