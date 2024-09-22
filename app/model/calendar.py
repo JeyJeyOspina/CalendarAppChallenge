@@ -11,7 +11,6 @@ from app.services.util import generate_unique_id, date_lower_than_today_error, e
 class Reminder:
     EMAIL: ClassVar[str] = 'email'
     SYSTEM: ClassVar[str] = 'system'
-
     date_time: datetime
     type: str = EMAIL
 
@@ -26,14 +25,16 @@ class Event:
     date_: date
     start_at: time
     end_at: time
-    reminders: list[Reminder] = field(default_factory=list)
+    reminders: list[Reminder] = field(init=False, default_factory=list)
     id: str = generate_unique_id()
 
     def add_reminder(self):
         self.reminders.append(Reminder(Reminder.date_time, Reminder.type))
 
     def delete_reminder(self, reminder_index: int):
-        pass
+        if reminder_index <= len(self.reminders):
+            self.reminders.pop(reminder_index)
+        reminder_not_found_error()
 
     def __str__(self):
         return (f"ID: {self.id}\nEvent title: {self.title}\nDescription: {self.description}\nTime: {self.start_at} -"
